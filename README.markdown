@@ -85,9 +85,17 @@ Installation
 You have two options:
 
 * Download the JAR for the latest version from [here](http://repo1.maven.org/maven2/org/pegdown/pegdown/).
-  _pegdown_ 1.6.0 has only one dependency: [parboiled for Java][parboiled], version 1.1.7.
+  _pegdown_ 1.6.0 has only one dependency: [parboiled for Java][parboiled], version 1.4.1.
    
 * The pegdown artifact is also available from maven central with group id **org.pegdown** and artifact-id **pegdown**.
+
+
+Building from Source
+--------------------
+
+The project builds with JDK 21 and Maven:
+
+    mvn clean test
 
 
 Usage
@@ -192,7 +200,6 @@ project under the project’s open source license.
    [Visitor]: http://www.decodified.com/pegdown/api/org/pegdown/ast/Visitor.html
    [ToHtmlSerializer]: https://github.com/sirthias/pegdown/blob/master/src/main/java/org/pegdown/ToHtmlSerializer.java
    [idea-markdown plugin]: https://github.com/nicoulaj/idea-markdown
-   [SBT]: http://www.scala-sbt.org/
    [Node]: http://www.decodified.com/pegdown/api/org/pegdown/ast/Node.html
    [PegDownPlugins]: http://github.com/sirthias/pegdown/blob/master/src/main/java/org/pegdown/plugins/PegDownPlugins.java
    [InlinePluginParser]: http://github.com/sirthias/pegdown/blob/master/src/main/java/org/pegdown/plugins/InlinePluginParser.java

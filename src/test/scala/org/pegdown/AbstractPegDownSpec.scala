@@ -3,13 +3,16 @@ package org.pegdown
 import java.io.{StringWriter, StringReader}
 import org.specs2.matcher.MatchResult
 import org.specs2.mutable.Specification
+import org.specs2.runner.JUnitRunner
 import org.w3c.tidy.Tidy
 import org.parboiled.common.FileUtils
 import org.parboiled.support.ToStringFormatter
 import org.parboiled.trees.GraphUtils
 import ast.Node
+import org.junit.runner.RunWith
 
 
+@RunWith(classOf[JUnitRunner])
 abstract class AbstractPegDownSpec extends Specification {
 
   def test(testName: String)(implicit processor: PegDownProcessor): MatchResult[String] = {
@@ -24,8 +27,7 @@ abstract class AbstractPegDownSpec extends Specification {
 
   def test(testName: String, expectedOutput: String, htmlSerializer: ToHtmlSerializer = null)
           (implicit processor: PegDownProcessor): MatchResult[String] = {
-    val markdown = FileUtils.readAllCharsFromResource(testName + ".md")
-    require(markdown != null, "Test '" + testName + "' not found")
+    val markdown = readMarkdown(testName)
 
     val astRoot = processor.parseMarkdown(markdown)
 
@@ -62,8 +64,7 @@ abstract class AbstractPegDownSpec extends Specification {
   }
 
   def testASTAlt(testName: String, expectedASTNameSuffix : String)(implicit processor: PegDownProcessor) = {
-    val markdown = FileUtils.readAllCharsFromResource(testName + ".md")
-    require(markdown != null, "Test '" + testName + "' not found")
+    val markdown = readMarkdown(testName)
 
     val expectedAst = FileUtils.readAllTextFromResource(testName + expectedASTNameSuffix + ".ast")
     require(expectedAst != null, "Expected AST for '" + testName + expectedASTNameSuffix + "' not found")
@@ -89,5 +90,11 @@ abstract class AbstractPegDownSpec extends Specification {
   }
 
   def normalize(string: String) = string.replace("\r\n", "\n").replace("\r", "\n")
+
+  private def readMarkdown(testName: String) = {
+    val markdown = FileUtils.readAllCharsFromResource(testName + ".md")
+    require(markdown != null, "Test '" + testName + "' not found")
+    normalize(new String(markdown)).toCharArray
+  }
 
 }
